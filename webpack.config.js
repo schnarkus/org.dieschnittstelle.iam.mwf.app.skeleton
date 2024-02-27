@@ -34,8 +34,8 @@ module.exports = {
         })
     ],
     entry: {
-        "app-js": glob.sync('./src/js/*.js', { dotRelative: true }),
-        "app-style": glob.sync('./src/css/*.css', { dotRelative: true })
+        "app-js": glob.sync('./src/js/*.js', { dotRelative: false }),
+        "app-style": glob.sync('./src/css/*.css', { dotRelative: false })
     },
     output: {
         path: path.resolve(__dirname, "dist"),
@@ -55,5 +55,8 @@ module.exports = {
                 use: [MiniCssExtractPlugin.loader, 'css-loader'],
             }
         ]
+    },
+    resolve: {
+        preferRelative: true
     }
 }
