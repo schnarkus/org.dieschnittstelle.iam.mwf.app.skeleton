@@ -1,5 +1,5 @@
 ## MWF Framework skeleton application
-For educational use only. Also see LICENSE file.
+For educational use only. Also see LICENSE file. See the tutorial.pdf document as an introduction for application development with MWF.
 
 icons have been downloaded from https://fonts.google.com/ on 2024-02-17
 See license conditions for icons: https://github.com/google/material-design-icons/blob/master/LICENSE
