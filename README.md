@@ -16,3 +16,33 @@ In the project directory, run: npm run serve
 
 # Access
 By default, the application is served under http://localhost:8080; in case port 8080 is not available, the serve script assigns an alternative port, which will be displayed a few lines underneath of the command. 
+
+# Images
+
+- mwf-img-backward
+- mwf-img-camera
+- mwf-img-delete
+- mwf-img-destroy
+- mwf-img-disk
+- mwf-img-hash
+- mwf-img-link
+- mwf-img-list
+- mwf-img-log-in
+- mwf-img-log-out
+- mwf-img-map
+- mwf-img-map-marker
+- mwf-img-notes
+- mwf-img-ok
+- mwf-img-options-vertical
+- mwf-img-paste
+- mwf-img-pencil
+- mwf-img-photo-album
+- mwf-img-play
+- mwf-img-play-button
+- mwf-img-plus
+- mwf-img-refresh
+- mwf-img-remove
+- mwf-img-rightarrow
+- mwf-img-sandwich
+- mwf-img-settings
+- mwf-img-tiles 
