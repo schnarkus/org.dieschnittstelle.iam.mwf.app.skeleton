@@ -11,7 +11,7 @@
   "author": "Joern Kreutel",
   "license": "ISC",
   "dependencies": {
-    "vfh-iam-mwf-base": "0.1.1"
+    "vfh-iam-mwf-base": "0.1.2"
   },
   "devDependencies": {
     "@babel/core": "^7.23.9",
