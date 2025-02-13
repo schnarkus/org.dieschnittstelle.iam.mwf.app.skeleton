@@ -19,6 +19,7 @@ With node v22 on MacOS there were issues that could be solved by prompting npm t
 - If you use node v22 on MacOS, additionally run the following two commands:
   - npm update --save webpack
   - npm update --save webpack-dev-server 
+The reported vulnerability issues refer to issues of the development tools for building the application, not to the application itself.
 
 # Development Run
 In the project directory, run: npm run serve
