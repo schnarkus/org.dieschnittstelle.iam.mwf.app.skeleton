@@ -12,7 +12,6 @@
   "license": "ISC",
   "dependencies": {
     "circular-dependency-plugin": "^5.2.2",
-    "exifreader": "4.23.5",
     "vfh-iam-mwf-base": "0.1.2"
   },
   "devDependencies": {
