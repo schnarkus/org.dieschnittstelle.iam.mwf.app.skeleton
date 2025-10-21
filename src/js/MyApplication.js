@@ -1,10 +1,10 @@
 /**
  * Updated by master on 21.02.24.
  */
-import {mwf} from "vfh-iam-mwf-base";
-import {EntityManager} from "vfh-iam-mwf-base";
-import {GenericCRUDImplLocal} from "vfh-iam-mwf-base";
-import {GenericCRUDImplRemote} from "vfh-iam-mwf-base";
+import { mwf } from "vfh-iam-mwf-base";
+import { EntityManager } from "vfh-iam-mwf-base";
+import { GenericCRUDImplLocal } from "vfh-iam-mwf-base";
+import { GenericCRUDImplRemote } from "vfh-iam-mwf-base";
 import * as entities from "./model/MyEntities.js";
 
 class MyApplication extends mwf.Application {
@@ -22,7 +22,7 @@ class MyApplication extends mwf.Application {
         console.log("MyApplication.oncreate(): initialising local database");
         // initialise the local database
         // TODO-REPEATED: add new entity types to the array of object store names
-        await GenericCRUDImplLocal.initialiseDB("mwftutdb", 1, ["MyEntity"]);
+        await GenericCRUDImplLocal.initialiseDB("mwftutdb", 1, ["MyEntity", "MediaItem"]); // IndexedDB im Browser löschen wenn es nicht geht
 
         console.log("MyApplication.oncreate(): local database initialised");
 
@@ -39,6 +39,6 @@ class MyApplication extends mwf.Application {
 }
 
 const application = new MyApplication();
-export {application as default}
+export { application as default }
 
 

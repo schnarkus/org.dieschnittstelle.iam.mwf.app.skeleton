@@ -12,6 +12,7 @@
   "license": "ISC",
   "dependencies": {
     "circular-dependency-plugin": "^5.2.2",
+    "prettier": "^3.6.2",
     "vfh-iam-mwf-base": "0.1.2"
   },
   "devDependencies": {

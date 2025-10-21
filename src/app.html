@@ -26,7 +26,27 @@
 <body data-mwf-application="MyApplication" class="mwf-loading-app">
 
 <!-- TODO-REPEATED: add new views here -->
-<div class="mwf-view mwf-view-initial" data-mwf-viewcontroller="MyInitialViewController">
+<div class="mwf-view mwf-view-initial" data-mwf-viewcontroller="ListviewViewController">
+<header>
+    <button class="mwf-imgbutton mwf-left-align mwf-img-sandwich"></button>
+    <h1>Medien</h1>
+    <button class="mwf-imgbutton mwf-right-align mwf-img-plus"></button>
+</header>
+<main class="mwf-scrollview">
+    <ul class="mwf-listview" data-mwf-listitem-view="myapp-listitemView">
+    <li class="mwf-listitem mwf-li-title-subtitle mwf-template" data-mwf-templatename="myapp-listitemView">
+    <img class="left-align" src="https://picsum.photos/100/100">
+    <div class="mwf-li-titleblock">
+        <h2>titel</h2>
+        <h3>untertitel</h3>
+    </div>
+    <button class="mwf-imgbutton mwf-right-align mwf-img-options-vertical"></button>
+    </li>
+    </ul>
+</main>
+<footer>
+    <button class="mwf-imgbutton mwf-right-align mwf-img-refresh"></button>
+</footer>
 </div>
 
 </body>
