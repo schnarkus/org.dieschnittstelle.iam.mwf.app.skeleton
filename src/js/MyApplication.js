@@ -31,7 +31,12 @@ class MyApplication extends mwf.Application {
         //this.registerCRUD("MyEntity", this.CRUDOPS.LOCAL, GenericCRUDImplLocal.newInstance("MyEntity"));
         //this.registerCRUD("MyEntity", this.CRUDOPS.REMOTE, GenericCRUDImplRemote.newInstance("MyEntity"));
 
+        this.registerEntity("MediaItem", entities.MediaItem, true);
+        this.registerCRUD("MediaItem", this.CRUDOPS.LOCAL, GenericCRUDImplLocal.newInstance("MediaItem"));
+        this.registerCRUD("MediaItem", this.CRUDOPS.REMOTE, GenericCRUDImplRemote.newInstance("MediaItem"));
+
         // TODO: do any further application specific initialisations here
+        this.initialiseCRUD(this.CRUDOPS.LOCAL, EntityManager);
 
         // THIS MUST NOT BE FORGOTTEN: initialise the entity manager!
         EntityManager.initialise();

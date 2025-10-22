@@ -25,6 +25,11 @@ export class MyEntity extends EntityManager.Entity {
 // Verwalter von State, Source of Truth
 export class MediaItem extends EntityManager.Entity {
 
+    title;
+    src;
+    contentType;
+    added;
+
     constructor(title, source, contentType) {
         super();
 
@@ -34,4 +39,8 @@ export class MediaItem extends EntityManager.Entity {
         this.added = Date.now();
     }
 
+    // architektonisch unsauber, aber hier am einfachsten
+    get addedDateString() {
+        return (new Date(this.added)).toLocaleDateString();
+    }
 }

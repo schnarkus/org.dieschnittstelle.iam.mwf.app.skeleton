@@ -1,8 +1,7 @@
 /**
  * @author Jörn Kreutel
  */
-import { GenericCRUDImplLocal, mwf } from "vfh-iam-mwf-base";
-import { mwfUtils } from "vfh-iam-mwf-base";
+import { mwf } from "vfh-iam-mwf-base";
 import * as entities from "../model/MyEntities.js";
 
 export default class ListviewViewController extends mwf.ViewController {
@@ -15,16 +14,6 @@ export default class ListviewViewController extends mwf.ViewController {
     constructor() {
         super();
 
-        this.items = [
-            new entities.MediaItem("Item 1", "https://picsum.photos/100/100"),
-            new entities.MediaItem("Item 2", "https://picsum.photos/200/100"),
-            new entities.MediaItem("Item 3", "https://picsum.photos/300/100"),
-            new entities.MediaItem("Item 4", "https://picsum.photos/400/100"),
-            new entities.MediaItem("Item 5", "https://picsum.photos/500/100")
-        ];
-
-        this.crudops = GenericCRUDImplLocal.newInstance("MediaItem");
-
         console.log("ListviewViewController()");
     }
 
@@ -34,12 +23,12 @@ export default class ListviewViewController extends mwf.ViewController {
     async oncreate() {
         // TODO: do databinding, set listeners, initialise the view
         const addNewElementAction = this.root.querySelector("header .mwf-img-plus")
-        addNewElementAction.onclick = () => {
-            const newMediaItem = this.createRandomMediaItem();
-            this.crudops.create(newMediaItem).then(created => this.addToListview(created));
+        addNewElementAction.onclick = async () => {
+            const newMediaItem = await this.createRandomMediaItem();
+            newMediaItem.create().then(() => this.addToListview(newMediaItem));
         }
 
-        this.crudops.readAll().then(items => this.initialiseListview(items));
+        entities.MediaItem.readAll().then(items => this.initialiseListview(items));
 
         // call the superclass once creation is done
         super.oncreate();
@@ -57,14 +46,14 @@ export default class ListviewViewController extends mwf.ViewController {
      * for views with listviews: bind a list item to an item view
      * TODO: delete if no listview is used or if databinding uses ractive templates
      */
-    bindListItemView(listviewid, itemview, itemobj) {
-        console.log("bindListItemView(): ", itemview, itemobj);
-        // TODO: implement how attributes of itemobj shall be displayed in itemview
-        // imperatives data binding
-        itemview.root.querySelector("img").src = itemobj.src;
-        itemview.root.querySelector("h2").textContent = itemobj.title;
-        itemview.root.getElementsByTagName("h3")[0].textContent = itemobj.added;
-    }
+    // bindListItemView(listviewid, itemview, itemobj) {
+    //     console.log("bindListItemView(): ", itemview, itemobj);
+    // TODO: implement how attributes of itemobj shall be displayed in itemview
+    // imperatives data binding
+    // itemview.root.querySelector("img").src = itemobj.src;
+    // itemview.root.querySelector("h2").textContent = itemobj.title;
+    // itemview.root.getElementsByTagName("h3")[0].textContent = itemobj.added;
+    // }
 
     /*
      * for views with listviews: react to the selection of a listitem
@@ -79,9 +68,10 @@ export default class ListviewViewController extends mwf.ViewController {
      * for views with listviews: react to the selection of a listitem menu option
      * TODO: delete if no listview is used or if item selection is specified by targetview/targetaction
      */
-    onListItemMenuItemSelected(menuitemview, itemobj, listview) {
-        // TODO: implement how selection of the option menuitemview for itemobj shall be handled
-    }
+    // onListItemMenuItemSelected(menuitemview, itemobj, listview) {
+    // TODO: implement how selection of the option menuitemview for itemobj shall be handled
+    //     console.log("onListItemMenuItemSelected(): ", menuitemview, itemobj);
+    // }
 
     /*
      * for views with dialogs
@@ -96,11 +86,19 @@ export default class ListviewViewController extends mwf.ViewController {
 
     // generate random list items on clicking the add button
     async createRandomMediaItem() {
-        const allItems = await this.crudops.readAll();
+        const allItems = await entities.MediaItem.readAll();
         const randomWidth = 100 + Math.floor(Math.random() * 500);
         const title = "Item " + (allItems.length + 1);
         const src = "https://picsum.photos/" + randomWidth + "/100";
         return new entities.MediaItem(title, src);
     }
-}
 
+    editItem(item) {
+        item.title += (" " + item.title);
+        item.update().then(() => this.updateInListview(item._id, item));
+    }
+
+    deleteItem(item) {
+        item.delete().then(() => this.removeFromListview(item._id));
+    }
+}
