@@ -60,6 +60,22 @@
     </main>
 </div>
 
+<div class="mwf-view" id="myapp-mediaReadview" data-mwf-viewcontroller="ReadviewViewController">
+    <div class="mwf-template mwf-databind" data-mwf-templatename="myapp-mediaReadviewTemplate">
+        <header>
+            <button class="mwf-imgbutton mwf-left-align mwf-img-sandwich"></button>
+            <h1 class="mwf-left-align mwf-dyncontent">{{item.title}}</h1>
+            <button class="mwf-imgbutton mwf-right-align mwf-img-delete" on-click="deleteItem"></button>
+        </header>
+        <main class="mwf-scrollview">
+            <img src="{{item.src}}">
+        </main>
+        <footer>
+            <button class="mwf-imgbutton mwf-left-align mwf-img-backward mwf-back"></button>
+        </footer>
+    </div>
+</div>
+
 </body>
 
 </html>

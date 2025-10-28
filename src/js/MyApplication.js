@@ -31,7 +31,7 @@ class MyApplication extends mwf.Application {
         //this.registerCRUD("MyEntity", this.CRUDOPS.LOCAL, GenericCRUDImplLocal.newInstance("MyEntity"));
         //this.registerCRUD("MyEntity", this.CRUDOPS.REMOTE, GenericCRUDImplRemote.newInstance("MyEntity"));
 
-        this.registerEntity("MediaItem", entities.MediaItem, true);
+        this.registerEntity("MediaItem", entities.MediaItem, true); // notify true -> publish CRUD events
         this.registerCRUD("MediaItem", this.CRUDOPS.LOCAL, GenericCRUDImplLocal.newInstance("MediaItem"));
         this.registerCRUD("MediaItem", this.CRUDOPS.REMOTE, GenericCRUDImplRemote.newInstance("MediaItem"));
 
