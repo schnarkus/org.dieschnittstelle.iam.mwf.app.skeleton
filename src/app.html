@@ -51,7 +51,7 @@
 
 <div class="mwf-listitem-menu mwf-dialog mwf-popup mwf-template mwf-databind" data-mwf-templatename="myapp-mediaItemMenu">
 
-    <header><h2 class="mwf-dyncontent">{{title}} {{_id}}</h2></header>
+    <header><h2 class="mwf-dyncontent">{{title}}</h2></header>
     <main>
         <ul>
             <li class="mwf-li-singletitle mwf-menu-item" data-mwf-targetaction="editItem">Editieren</li>
@@ -74,6 +74,19 @@
             <button class="mwf-imgbutton mwf-left-align mwf-img-backward mwf-back"></button>
         </footer>
     </div>
+</div>
+
+<div class="mwf-dialog mwf-popup mwf-template mwf-databind mwf-view-component" data-mwf-viewcontroller="GenericDialogTemplateViewController" data-mwf-templatename="mediaItemDialog">
+    <main>
+        <h2>{{#if item.created}}Medium editieren{{else}}Neues Medium{{/if}}</h2>
+        <form id="itemEditForm" on-submit="submitForm">
+            <input name="title" autocomplete="off" class="mwf-autofocus" type="text" placeholder="Titel" required="required" value="{{item.title}}"/>
+            <div class="mwf-buttonbar">
+             <button class="mwf-left-align mwf-button" type="button" on-click="deleteItem" disabled="{{#unless item.created}}disabled{{/unless}}">Löschen</button>
+                <input class="mwf-button-prio mwf-right-align mwf-button" type="submit" value="{{#if item.created}}Ändern{{else}}Hinzufügen{{/if}}"/>
+            </div>
+        </form>
+    </main>
 </div>
 
 </body>

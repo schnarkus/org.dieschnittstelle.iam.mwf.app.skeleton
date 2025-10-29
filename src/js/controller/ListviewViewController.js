@@ -43,13 +43,6 @@ export default class ListviewViewController extends mwf.ViewController {
         //   betroffene Entity) sind in evt.data enthalten. Im Callback
         //   aktualisieren wir die Listview (z.B. add/remove/update) anhand dieser Daten.
         //
-        // Beispielablauf:
-        // 1. Irgendwo im Code wird ein MediaItem erstellt: const m = new MediaItem(...); m.create();
-        // 2. Die create()-Implementierung (EntityManager) speichert das Objekt
-        //    und publiziert ein Event: { category: 'crud', action: 'created', type: 'MediaItem', data: m }
-        // 3. Dieser Controller hat einen Listener für new EventMatcher('crud','created','MediaItem')
-        //    und erhält das Event; evt.data enthält das neue MediaItem.
-        //
         // Vorteil: Publisher und Subscriber sind entkoppelt; der Controller
         // muss nicht wissen, wer die Änderungen verursacht hat.
         this.addListener(new EventMatcher("crud", "deleted", "MediaItem"), evt => {
@@ -67,14 +60,13 @@ export default class ListviewViewController extends mwf.ViewController {
             this.updateInListview(evt.data._id, evt.data);
         });
 
-        const addNewElementAction = this.root.querySelector("header .mwf-img-plus")
-        addNewElementAction.onclick = async () => {
-            const newMediaItem = await this.createRandomMediaItem();
-            // Der Aufruf von create() löst intern ein "crud"-Event aus
-            // (Kategorie: 'crud', Aktion: 'created', Typ: 'MediaItem').
-            // Listener (wie oben registriert) erhalten das Event und
-            // können die Listview entsprechend aktualisieren.
-            newMediaItem.create();
+        const addNewElementAction = this.root.querySelector("header .mwf-img-plus");
+        if (addNewElementAction) {
+            addNewElementAction.onclick = async () => {
+                await this.createNewItem();
+            };
+        } else {
+            console.warn("ListviewViewController: add-new element not found (header .mwf-img-plus)");
         }
 
         entities.MediaItem.readAll().then(items => this.initialiseListview(items));
@@ -139,13 +131,19 @@ export default class ListviewViewController extends mwf.ViewController {
         // TODO: implement action bindings for dialog, accessing dialog.root
     }
 
-    // generate random list items on clicking the add button
-    async createRandomMediaItem() {
-        const allItems = await entities.MediaItem.readAll();
-        const randomWidth = 100 + Math.floor(Math.random() * 500);
-        const title = "Item " + (allItems.length + 1);
-        const src = "https://picsum.photos/" + randomWidth + "/100";
-        return new entities.MediaItem(title, src);
+    // generate a new item and show the dialog to create it
+    async createNewItem() {
+        const resp = await fetch("https://picsum.photos/1000/1000");
+        const newItem = new entities.MediaItem("", resp.url);
+        // Dialog öffnen; submit führt create aus, delete schließt den Dialog
+        this.showDialog("mediaItemDialog", {
+            item: newItem,
+            actionBindings: {
+                submitForm: async e => { e.original.preventDefault(); await newItem.create(); this.hideDialog(); },
+                deleteItem: () => this.hideDialog()
+            }
+        });
+        return newItem;
     }
 
     // lifecycle method called when the view is shown
@@ -155,11 +153,16 @@ export default class ListviewViewController extends mwf.ViewController {
     // }
 
     editItem(item) {
-        item.title += (" " + item.title);
-        item.update();
+        this.showDialog("mediaItemDialog", {
+            item: item,
+            actionBindings: {
+                submitForm: async e => { e.original.preventDefault(); await item.update(); this.hideDialog(); },
+                deleteItem: async () => { await this.deleteItem(item); this.hideDialog(); }
+            }
+        });
     }
 
     deleteItem(item) {
-        item.delete();
+        return item.delete();
     }
 }
