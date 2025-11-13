@@ -60,13 +60,13 @@ export default class ListviewViewController extends mwf.ViewController {
             this.updateInListview(evt.data._id, evt.data);
         });
 
-        const addNewElementAction = this.root.querySelector("header .mwf-img-plus");
+        const addNewElementAction = this.root.querySelector("#addMediaButton");
         if (addNewElementAction) {
             addNewElementAction.onclick = async () => {
                 await this.createNewItem();
             };
         } else {
-            console.warn("ListviewViewController: add-new element not found (header .mwf-img-plus)");
+            console.warn("ListviewViewController: add-new element not found (addMediaButton)");
         }
 
         entities.MediaItem.readAll().then(items => this.initialiseListview(items));
